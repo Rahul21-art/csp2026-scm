@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Complaint Receipt</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+
+body{
+background:#f4f6f9;
+}
+
+.receipt{
+
+max-width:700px;
+
+margin:40px auto;
+
+background:white;
+
+padding:30px;
+
+border-radius:15px;
+
+box-shadow:0px 5px 20px rgba(0,0,0,0.2);
+
+}
+
+.header{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.complaint-id{
+
+font-size:24px;
+
+font-weight:bold;
+
+color:#0d6efd;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="receipt">
+
+<div class="header">
+
+<h2>
+Sachivalayam Complaint Receipt
+</h2>
+
+<p>
+Official Acknowledgement
+</p>
+
+</div>
+
+<div id="receipt"></div>
+
+<div class="text-center mt-4">
+
+<button
+class="btn btn-success"
+onclick="downloadReceipt()">
+
+Download Receipt
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let data =
+JSON.parse(
+localStorage.getItem(
+"receipt"
+)
+);
+
+document.getElementById(
+"receipt"
+).innerHTML = `
+
+<p class="complaint-id">
+
+Complaint ID:
+${data.id}
+
+</p>
+
+<hr>
+
+<p>
+<b>Name:</b>
+${data.name}
+</p>
+
+<p>
+<b>Category:</b>
+${data.category}
+</p>
+
+<p>
+<b>Description:</b>
+${data.description}
+</p>
+
+<p>
+<b>Status:</b>
+${data.status}
+</p>
+
+<p>
+<b>Date & Time:</b>
+${data.date}
+</p>
+
+<hr>
+
+<p>
+Please keep this Complaint ID for future tracking.
+</p>
+
+`;
+async function downloadReceipt(){
+
+const { jsPDF } = window.jspdf;
+
+let pdf =
+new jsPDF();
+
+let data =
+JSON.parse(
+localStorage.getItem("receipt")
+);
+
+pdf.setFontSize(18);
+pdf.text(
+"Sachivalayam Complaint Receipt",
+20,
+20
+);
+
+pdf.setFontSize(12);
+
+pdf.text(
+"Complaint ID: " + data.id,
+20,
+40
+);
+
+pdf.text(
+"Name: " + data.name,
+20,
+55
+);
+
+pdf.text(
+"Category: " + data.category,
+20,
+70
+);
+
+pdf.text(
+"Status: " + data.status,
+20,
+85
+);
+
+pdf.text(
+"Date: " + data.date,
+20,
+100
+);
+
+pdf.text(
+"Description: " + data.description,
+20,
+115
+);
+
+pdf.save(
+data.id + "_Receipt.pdf"
+);
+
+}
+</script>
+
+</body>
+</html>

@@ -79,6 +79,16 @@ function loginUser(){
     let password =
     document.getElementById("password").value.trim();
 
+    // Admin Login
+    if(
+        email === "scm2026@gmail.com" &&
+        password === "admin1421"
+    ){
+        window.location = "admin.html";
+        return;
+    }
+
+    // Normal User Login
     let user =
     JSON.parse(localStorage.getItem("user"));
 
@@ -91,14 +101,9 @@ function loginUser(){
         email === user.email &&
         password === user.password
     ){
-
-        alert("Login Successful");
-
-        window.location =
-        "dashboard.html";
+        window.location = "dashboard.html";
     }
     else{
-
         alert("Invalid Email or Password");
     }
 }

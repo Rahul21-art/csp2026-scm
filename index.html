@@ -222,21 +222,20 @@ function showComplaints(type){
             let complaint =
             JSON.parse(localStorage.getItem(key));
 
-            if(
-                type == "all"
-                ||
-                (
-                    type == "active"
-                    &&
-                    complaint.status != "Resolved"
-                )
-                ||
-                (
-                    type == "resolved"
-                    &&
-                    complaint.status == "Resolved"
-                )
-            ){
+           if(
+    type == "all"
+    ||
+    (
+        type == "active" &&
+        complaint.status !== "Resolved"
+    )
+    ||
+    (
+        type == "resolved" &&
+        complaint.status === "Resolved"
+    )
+){
+            
 let progress = 25;
 
 if(complaint.status == "Assigned"){

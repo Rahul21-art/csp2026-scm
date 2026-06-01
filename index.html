@@ -187,25 +187,27 @@ function updateCounts(){
 animateCounter("active", active);
 animateCounter("resolved", resolved);
 }
-function animateCounter(id,target){
+function animateCounter(id, target){
 
-let count = 0;
+    if(target <= 0){
+        document.getElementById(id).innerHTML = "0";
+        return;
+    }
 
-let interval = setInterval(function(){
+    let count = 0;
 
-count++;
+    let interval = setInterval(function(){
 
-document.getElementById(id).innerHTML =
-count;
+        count++;
 
-if(count >= target){
+        document.getElementById(id).innerHTML =
+        count;
 
-clearInterval(interval);
+        if(count >= target){
+            clearInterval(interval);
+        }
 
-}
-
-},150);
-
+    },50);
 }
 window.addEventListener("load", updateCounts);
 

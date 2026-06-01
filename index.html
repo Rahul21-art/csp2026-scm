@@ -76,12 +76,11 @@ Register, Track and Monitor Your Complaints Easily
 
 <div class="hero-buttons">
 
-<a href="complaint.html"
-class="btn btn-success btn-lg me-2">
-
+<button
+class="btn btn-success btn-lg me-2"
+onclick="checkLogin()">
 Register Complaint
-
-</a>
+</button>
 <br><br>
 <a href="track.html"
 class="btn btn-warning btn-lg">
@@ -298,7 +297,7 @@ function checkLogin(){
 
     let user =
     localStorage.getItem(
-    "loggedInUser"
+        "loggedInUser"
     );
 
     if(user){
@@ -306,19 +305,17 @@ function checkLogin(){
         window.location =
         "complaint.html";
 
-    }
-    else{
+    }else{
 
         alert(
-        "Please Login First"
+            "Please Login First"
         );
 
         window.location =
         "login.html";
-
     }
-
 }
+
 
 </script>
 <script src="js/language.js"></script>

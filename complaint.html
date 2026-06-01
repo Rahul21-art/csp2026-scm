@@ -93,9 +93,9 @@ Submit Complaint
 </div>
 
 <script>
-
 function submitComplaint(){
-    let name =
+
+let name =
 document.getElementById("name").value.trim();
 
 let place =
@@ -104,185 +104,172 @@ document.getElementById("place").value.trim();
 let description =
 document.getElementById("description").value.trim();
 
+let category =
+document.getElementById("category").value;
+
 if(name == ""){
-    alert("Please Enter Name");
-    return;
+alert("Please Enter Name");
+return;
 }
 
 if(place == ""){
-    alert("Please Enter Village / Area / Street");
-    return;
+alert("Please Enter Village / Area / Street");
+return;
 }
 
 if(description == ""){
-    alert("Please Enter Complaint Description");
-    return;
+alert("Please Enter Complaint Description");
+return;
 }
-    let complaintId =
-    "CMP" + Date.now();
-    
-    for(let i=0;i<localStorage.length;i++){
 
-    let key = localStorage.key(i);
+for(let i = 0; i < localStorage.length; i++){
 
-    if(key.startsWith("CMP")){
+```
+let key = localStorage.key(i);
 
-        let existingComplaint =
-        JSON.parse(
-        localStorage.getItem(key)
+if(key.startsWith("CMP")){
+
+    let existingComplaint =
+    JSON.parse(localStorage.getItem(key));
+
+    if(
+
+        existingComplaint.place &&
+        existingComplaint.place.trim().toLowerCase() ==
+        place.toLowerCase()
+
+        &&
+
+        existingComplaint.category == category
+
+        &&
+
+        existingComplaint.status != "Resolved"
+
+    ){
+
+        let copyId = confirm(
+
+            "Complaint Already Registered!\n\n" +
+
+            "Complaint ID: " +
+            existingComplaint.id +
+
+            "\n\nStatus: " +
+            existingComplaint.status +
+
+            "\n\nYou can track the progress using this Complaint ID.\n\n" +
+
+            "Press OK to copy the Complaint ID."
+
         );
 
-     if(
+        if(copyId){
 
-existingComplaint.place &&
-existingComplaint.place.trim().toLowerCase() ==
-place.toLowerCase()
+            navigator.clipboard.writeText(
+                existingComplaint.id
+            );
 
-&&
+            alert(
+                "Complaint ID Copied Successfully!"
+            );
 
-existingComplaint.category ==
-document.getElementById("category").value
+        }
 
-&&
+        return;
+    }
+}
+```
 
-existingComplaint.status != "Resolved"
+}
+
+let complaintId =
+"CMP" + Date.now();
+
+let complaint = {
+
+```
+id: complaintId,
+
+user:
+localStorage.getItem("loggedInUser"),
+
+name: name,
+
+category: category,
+
+place: place,
+
+description: description,
+
+status: "Submitted",
+
+date:
+new Date().toLocaleString()
+```
+
+};
+
+localStorage.setItem(
+complaintId,
+JSON.stringify(complaint)
+);
+
+localStorage.setItem(
+"lastComplaint",
+complaintId
+);
+
+localStorage.setItem(
+"receipt",
+JSON.stringify(complaint)
+);
+
 let copyId = confirm(
 
-"Complaint Already Registered!\n\n" +
+```
+"Complaint Registered Successfully!\n\n" +
 
 "Complaint ID: " +
-existingComplaint.id +
+complaintId +
 
-"\n\nStatus: " +
-existingComplaint.status +
-
-"\n\nYou can track the progress using this Complaint ID.\n\n" +
-
-"Press OK to copy the Complaint ID."
+"\n\nPress OK to copy Complaint ID."
+```
 
 );
 
 if(copyId){
 
+```
 navigator.clipboard.writeText(
-existingComplaint.id
+    complaintId
 );
 
 alert(
-"Complaint ID Copied Successfully!"
+    "Complaint ID Copied Successfully!"
 );
+```
 
 }
 
-return;
-){
-
-    let copyId = confirm(
-
-        "Complaint Already Registered!\n\n" +
-
-        "Complaint ID: " +
-
-        existingComplaint.id +
-
-        "\n\nStatus: " +
-
-        existingComplaint.status +
-
-        "\n\nPress OK to copy Complaint ID."
-
-    );
-
-    if(copyId){
-
-        navigator.clipboard.writeText(
-            existingComplaint.id
-        );
-
-        alert(
-            "Complaint ID Copied Successfully!"
-        );
-
-    }
-
-    return;
-}
-
-    }
+window.open("receipt.html");
 
 }
 
-    let complaint = {
 
-        id: complaintId,
-
-        user:
-        localStorage.getItem("loggedInUser"),
-
-        name:
-        document.getElementById("name").value,
-
-        category:
-        document.getElementById("category").value,
-
-        place:
-        document.getElementById("place").value,
-
-        description:
-        document.getElementById("description").value,
-
-        status:"Submitted",
-
-        date:
-        new Date().toLocaleString()
-
-    };
-
-    localStorage.setItem(
-        complaintId,
-        JSON.stringify(complaint)
-    );
-
-    localStorage.setItem(
-        "lastComplaint",
-        complaintId
-    );
-
-    localStorage.setItem(
-        "receipt",
-        JSON.stringify(complaint)
-    );
-
-    let copyId = confirm(
-        "Complaint Registered Successfully!\n\nComplaint ID: "
-        + complaintId +
-        "\n\nPress OK to copy Complaint ID."
-    );
-
-    if(copyId){
-
-        navigator.clipboard.writeText(
-            complaintId
-        );
-
-        alert(
-            "Complaint ID Copied Successfully!"
-        );
-
-    }
-
-    window.open(
-        "receipt.html"
-    );
-
-}
 </script>
 <script src="js/language.js"></script>
-    window.onload = function(){
+
+<script>
+
+window.onload = function(){
 
 document.getElementById("name").value =
 localStorage.getItem("loggedInUserName") || "";
 
 };
+
+</script>
+
 </body>
 </html>

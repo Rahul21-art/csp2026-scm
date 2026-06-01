@@ -42,15 +42,19 @@ English
 <b>Sachivalayam CMS</b>
 </a>
 
-<div>
+<div id="topButtons">
 
-    <a href="register.html" class="btn btn-light me-2">
-<span id="registerBtn">Register</span>
-</a>
+    <a href="register.html"
+    class="btn btn-light me-2"
+    id="registerBtnTop">
+        Register
+    </a>
 
-<a href="login.html" class="btn btn-warning">
-<span id="loginBtn">Login</span>
-</a>
+    <a href="login.html"
+    class="btn btn-warning"
+    id="loginBtnTop">
+        Login
+    </a>
 
 </div>
 
@@ -318,7 +322,43 @@ function checkLogin(){
 
 </script>
 <script src="js/language.js"></script>
+<script>
+function updateNavbar(){
 
+    let user =
+    localStorage.getItem("loggedInUser");
+
+    if(user){
+
+        document.getElementById("topButtons").innerHTML = `
+
+        <a href="dashboard.html"
+        class="btn btn-success me-2">
+            My Dashboard
+        </a>
+
+        <button
+        class="btn btn-danger"
+        onclick="logout()">
+            Logout
+        </button>
+
+        `;
+    }
+}
+
+function logout(){
+
+    localStorage.removeItem("loggedInUser");
+
+    window.location.reload();
+}
+
+window.addEventListener(
+    "load",
+    updateNavbar
+);
+</script>
 <footer
 class="bg-dark text-white text-center p-4 mt-5">
 

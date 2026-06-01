@@ -55,7 +55,11 @@ style="max-width:700px;">
 Register Complaint
 </h2>
 
-<input id="name" class="form-control mb-3" placeholder="Name">
+<input
+id="name"
+class="form-control mb-3"
+placeholder="Name"
+readonly>
 
 <select id="category" class="form-control mb-3">
 
@@ -91,7 +95,29 @@ Submit Complaint
 <script>
 
 function submitComplaint(){
+    let name =
+document.getElementById("name").value.trim();
 
+let place =
+document.getElementById("place").value.trim();
+
+let description =
+document.getElementById("description").value.trim();
+
+if(name == ""){
+    alert("Please Enter Name");
+    return;
+}
+
+if(place == ""){
+    alert("Please Enter Village / Area / Street");
+    return;
+}
+
+if(description == ""){
+    alert("Please Enter Complaint Description");
+    return;
+}
     let complaintId =
     "CMP" + Date.now();
     
@@ -106,11 +132,11 @@ function submitComplaint(){
         localStorage.getItem(key)
         );
 
-      if(
+     if(
 
 existingComplaint.place &&
 existingComplaint.place.trim().toLowerCase() ==
-document.getElementById("place").value.trim().toLowerCase()
+place.toLowerCase()
 
 &&
 
@@ -120,7 +146,35 @@ document.getElementById("category").value
 &&
 
 existingComplaint.status != "Resolved"
+let copyId = confirm(
 
+"Complaint Already Registered!\n\n" +
+
+"Complaint ID: " +
+existingComplaint.id +
+
+"\n\nStatus: " +
+existingComplaint.status +
+
+"\n\nYou can track the progress using this Complaint ID.\n\n" +
+
+"Press OK to copy the Complaint ID."
+
+);
+
+if(copyId){
+
+navigator.clipboard.writeText(
+existingComplaint.id
+);
+
+alert(
+"Complaint ID Copied Successfully!"
+);
+
+}
+
+return;
 ){
 
     let copyId = confirm(
@@ -224,5 +278,11 @@ existingComplaint.status != "Resolved"
 }
 </script>
 <script src="js/language.js"></script>
+    window.onload = function(){
+
+document.getElementById("name").value =
+localStorage.getItem("loggedInUserName") || "";
+
+};
 </body>
 </html>

@@ -100,12 +100,13 @@ function loginUser(){
     email === user.email &&
     password === user.password
 ){
-    localStorage.setItem(
-        "loggedInUser",
-        user.email
-    );
 
-    window.location = "dashboard.html";
+    localStorage.setItem(
+    "loggedInUser",
+    user.email
+);
+
+window.location = "index.html";
 }
     else{
         alert("Invalid Email or Password");

@@ -96,13 +96,17 @@ function loginUser(){
         alert("No user registered");
         return;
     }
+        if(
+    email === user.email &&
+    password === user.password
+){
+    localStorage.setItem(
+        "loggedInUser",
+        user.email
+    );
 
-    if(
-        email === user.email &&
-        password === user.password
-    ){
-        window.location = "dashboard.html";
-    }
+    window.location = "dashboard.html";
+}
     else{
         alert("Invalid Email or Password");
     }
